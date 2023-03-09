@@ -26,7 +26,7 @@ jobs:
       # This uses the default path for the openapi document and thus assumes there is an openapi.json in the current workspace.
       - name: Generate Code
         uses: openapi-generators/openapitools-generator-action@v1
-        # with:
+        with: {}
         #   generator: typescript-angular
         #   config-file: angular-generator-config.yml
 
