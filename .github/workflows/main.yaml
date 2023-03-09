@@ -33,6 +33,7 @@ jobs:
 
       - name: Build and Deploy
         uses: actions/setup-node@v3
+        continue-on-error: true
         with:
           node-version: 18.12.1
           registry-url: https://registry.npmjs.org/
