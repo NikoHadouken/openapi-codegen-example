@@ -1,0 +1,219 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Swagger Petstore
+  license:
+    name: MIT
+servers:
+  - url: http://petstore.swagger.io/v1
+paths:
+  /pets:
+    get:
+      summary: List all pets
+      operationId: findPets
+      tags:
+        - pets
+      parameters:
+        - $ref: "#/components/parameters/offset"
+        - $ref: "#/components/parameters/limit"
+        - $ref: "#/components/parameters/sort"
+        - $ref: "#/components/parameters/search"
+      responses:
+        200:
+          $ref: "#/components/responses/FindPetResponse"
+        default:
+          $ref: "#/components/responses/ErrorResponse"
+
+    post:
+      summary: Create a pet
+      operationId: createPet
+      tags:
+        - pets
+      requestBody:
+        description: Create new pet
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreatePetDto"
+      responses:
+        201:
+          description: Null response
+        default:
+          $ref: "#/components/responses/ErrorResponse"
+
+  /pets/{petId}:
+    get:
+      summary: Info for a specific pet
+      operationId: showPetById
+      tags:
+        - pets
+      parameters:
+        - name: petId
+          in: path
+          required: true
+          description: The id of the pet to retrieve
+          schema:
+            type: string
+      responses:
+        200:
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Pet"
+        default:
+          $ref: "#/components/responses/ErrorResponse"
+
+  /pets/{petId}/toys/{toyId}:
+    put:
+      summary: Update pet toy
+      operationId: updatePetToy
+      tags:
+        - pets
+      parameters:
+        - name: petId
+          in: path
+          required: true
+          description: The id of the pet
+          schema:
+            type: string
+        - name: toyId
+          in: path
+          required: true
+          description: The id of the toy
+          schema:
+            type: string
+      requestBody:
+        description: Update pet toy
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateToyDto"
+      responses:
+        200:
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Pet"
+        default:
+          $ref: "#/components/responses/ErrorResponse"
+
+components:
+  parameters:
+    offset:
+      description: numeric offset of the first element
+      in: query
+      name: offset
+      schema:
+        type: integer
+        minimum: 0
+        default: 0
+      required: false
+    limit:
+      description: limit the number of entries
+      in: query
+      name: limit
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 20
+      required: false
+    sort:
+      description: list of fields to sort result, prefix field names with + or - to indicate ordering (ascending/descending)
+      in: query
+      name: sort
+      schema:
+        type: array
+        items:
+          type: string
+          pattern: ^[+-]?\w+$
+      required: false
+    search:
+      description: search by keyword
+      in: query
+      name: s
+      schema:
+        type: string
+
+  responses:
+    FindPetResponse:
+      description: An paged array of pets
+      headers:
+        x-next:
+          description: A link to the next page of responses
+          schema:
+            type: string
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "#/components/schemas/Pet"
+
+    ErrorResponse:
+      description: "error: not found"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/HttpError"
+          example:
+            status: 404
+            name: "Not Found"
+            message: "Entity was not found"
+
+  schemas:
+    Id:
+      type: string
+
+    Pet:
+      required:
+        - id
+        - name
+      properties:
+        id:
+          $ref: "#/components/schemas/Id"
+        name:
+          type: string
+        tag:
+          type: string
+        visibility:
+          type: string
+          enum:
+            - public
+            - internal
+            - private
+
+    CreatePetDto:
+      required:
+        - name
+      properties:
+        name:
+          type: string
+
+    UpdateToyDto:
+      properties:
+        name:
+          type: string
+
+    HttpError:
+      type: object
+      properties:
+        status:
+          type: integer
+          format: int32
+          example: 401
+        name:
+          type: string
+          example: "Unauthorized"
+        message:
+          type: string
+          example: "Token expired"
+        # data:
+        #   type: object
+      required:
+        - status
+        - message

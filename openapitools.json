@@ -1,0 +1,26 @@
+{
+  "$schema": "./node_modules/@openapitools/openapi-generator-cli/config.schema.json",
+  "spaces": 2,
+  "generator-cli": {
+    "version": "6.4.0",
+    "generators": {
+      "html-docs": {
+        "generatorName": "html2",
+        "inputSpec": "#{cwd}/openapi.yaml",
+        "output": "#{cwd}/out/html-docs"
+      },
+      "petstore-typescript-client": {
+        "generatorName": "typescript-axios",
+        "inputSpec": "#{cwd}/openapi.yaml",
+        "output": "#{cwd}/out/petstore-typescript-client",
+        "additionalProperties": {
+          "withSeparateModelsAndApi": true,
+          "apiPackage": "apis",
+          "modelPackage": "models",
+          "enumPropertyNaming": "UPPERCASE",
+          "useSingleRequestParameter": false
+        }
+      }
+    }
+  }
+}
