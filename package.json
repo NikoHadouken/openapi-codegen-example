@@ -5,6 +5,8 @@
   "main": "index.js",
   "scripts": {
     "codegen": "rm -rf out && openapi-generator-cli generate",
+    "build": "sh scripts/build.sh",
+    "publish": "sh scripts/publish.sh",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
