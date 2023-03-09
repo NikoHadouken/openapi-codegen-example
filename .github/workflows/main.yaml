@@ -31,14 +31,19 @@ jobs:
       #     openapi-file: openapi.yaml
       #     config-file: petstore-typescript-client.yaml
 
-      - name: Build and Deploy
+      - name: Setup Node
         uses: actions/setup-node@v3
-        continue-on-error: true
         with:
           node-version: 18.12.1
           registry-url: https://registry.npmjs.org/
-      - run: |
+
+      - name: Install Dependencies
+        run: |
           npm ci
+
+      - name: Build and Deploy
+        continue-on-error: true
+        run: |
           npm run codegen
           npm run build
           npm run publish
@@ -46,6 +51,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
 
       - name: Publish github pages
+        continue-on-error: true
         run: |
           git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
           node run publish:gh-pages -d out/html-docs build -u "github-actions-bot <support+actions@github.com>"
