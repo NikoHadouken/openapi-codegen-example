@@ -3,7 +3,7 @@
 # ts client
 
 cd ./out/petstore-typescript-client
-pwd
+
 npm install
 
 echo "
@@ -13,5 +13,6 @@ git_push.sh
 " >> .npmignore
 
 
-echo "@nikohadouken/petstore-client-axios@1.0.0" > README.md
+echo "@nikohadouken/petstore-client-axios" > README.md
 
+cd -
