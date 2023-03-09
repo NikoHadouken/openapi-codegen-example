@@ -40,6 +40,6 @@ jobs:
           npm ci
           npm run codegen
           npm run build
-          npm run deploy
+          npm run publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
