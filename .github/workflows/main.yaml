@@ -54,6 +54,6 @@ jobs:
         continue-on-error: true
         run: |
           git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
-          npm run publish:gh-pages -- -u "github-actions-bot <support+actions@github.com>"
+          node node_modules/.bin/gh-pages -d out/html-docs -u "github-actions-bot <support+actions@github.com>"
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
