@@ -15,7 +15,7 @@
         "output": "#{cwd}/out/petstore-typescript-client",
         "additionalProperties": {
           "npmName": "@nikohadouken/petstore-client-axios",
-          "npmVersion": "1.0.4",
+          "npmVersion": "1.0.5",
           "withSeparateModelsAndApi": true,
           "apiPackage": "apis",
           "modelPackage": "models",

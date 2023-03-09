@@ -2,7 +2,7 @@
 
 # html-docs
 
-node node_modules/.bin/gh-pages -d out/html-docs
+# node node_modules/.bin/gh-pages -d out/html-docs
 
 # ts client
 
