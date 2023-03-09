@@ -24,11 +24,12 @@ jobs:
 
       # Use the action to generate a client package
       # This uses the default path for the openapi document and thus assumes there is an openapi.json in the current workspace.
-      - name: Generate Code
-        uses: openapi-generators/openapitools-generator-action@v1
-        with: {}
-        #   generator: typescript-angular
-        #   config-file: angular-generator-config.yml
+      # - name: Generate Code
+      #   uses: openapi-generators/openapitools-generator-action@v1
+      #   with:
+      #     generator: typescript-fetch
+      #     openapi-file: openapi.yaml
+      #     config-file: petstore-typescript-client.yaml
 
       - name: Build and Deploy
         uses: actions/setup-node@v3
@@ -36,7 +37,9 @@ jobs:
           node-version: 18.12.1
           registry-url: https://registry.npmjs.org/
       - run: |
-          npm ci --production
+          npm ci
+          npm run codegen
           npm run build
+          npm run deploy
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
